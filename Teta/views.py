@@ -42,11 +42,6 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 
-@login_required
-def home(request):
-    events = Events.objects.all()
-    return render(request, 'home.html', {'events': events})
-
 
 @login_required
 def create_organization(request):
@@ -146,9 +141,14 @@ def event_detail(request, event_id):
 @login_required
 def home(request):
     events = Events.objects.all()
-    return render(request, 'home.html', {'events': events})
+    organizations = Organizations.objects.all()  # Отримати всі організації
+    return render(request, 'home.html', {'events': events, 'organizations': organizations})
 
-
+@login_required
+def organization_detail(request, organization_id):
+    organization = get_object_or_404(Organizations, pk=organization_id)
+    events = Events.objects.filter(organization=organization)
+    return render(request, 'organization_detail.html', {'organization': organization, 'events': events})
 @login_required
 def logout_view(request):
     if request.method == 'POST':

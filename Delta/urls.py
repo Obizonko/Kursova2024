@@ -1,5 +1,5 @@
 from django.urls import path
-from Teta.views import login_view, register, home, create_organization, create_event, event_detail, logout_view, edit_event
+from Teta.views import login_view, register, home, create_organization, create_event, event_detail, logout_view, edit_event, organization_detail
 from django.contrib.auth.views import LogoutView
 from django.contrib import admin
 
@@ -17,4 +17,6 @@ urlpatterns = [
     path('logout_confirmation/', logout_view, name='logout'),
     path('edit_event/<int:event_id>/', edit_event, name='edit_event'),
     path('admin/', admin.site.urls),
+    path('organization/<int:organization_id>/', organization_detail, name='organization_detail'),
+
 ]

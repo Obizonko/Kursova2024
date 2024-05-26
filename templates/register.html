@@ -1,20 +1,50 @@
-{% extends 'base.html' %}
-
-{% block title %}Register{% endblock %}
-
-{% block content %}
-<div class="mt-5">
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="form-group">
-            <small class="form-text text-muted">
-                Your password must contain at least 8 characters, including a mix of letters, numbers, and symbols.
-            </small>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <style>
+        /* Custom CSS styles */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding-top: 50px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-control {
+            border-radius: 20px; /* Rounded corners for form inputs */
+        }
+        .btn-primary {
+            width: 100%;
+            border-radius: 20px; /* Rounded corners for buttons */
+        }
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <div class="back-btn">
+            <a href="{% url 'login' %}" class="btn btn-secondary">Back to Login</a>
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back</a>
-</div>
-{% endblock %}
+    </div>
+</body>
+</html>
