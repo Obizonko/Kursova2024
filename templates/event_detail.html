@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Event Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <img class="card-img-top" src="{{ event.banner }}" alt="Event banner">
+        <div class="card-body">
+            <h5 class="card-title">{{ event.event_name }}</h5>
+            <p class="card-text">{{ event.description }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p><strong>Start Time:</strong> {{ event.start_time }}</p>
+            <p><strong>End Time:</strong> {{ event.end_time }}</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h5>Participants</h5>
+        <ul class="list-group">
+            {% for participant in participants %}
+                <li class="list-group-item">
+                    {{ participant.user.name }} {{ participant.user.surname }} - {{ participant.role.role }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if event.organization.owner == user %}
+    <div class="mt-4">
+        <a href="{% url 'edit_event' event.id %}" class="btn btn-primary">Edit Event</a>
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <h5>Register for this event</h5>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="role">Choose your role</label>
+                <select id="role" name="role" class="form-control">
+                    {% for role in roles %}
+                        <option value="{{ role.id }}">{{ role.role }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endblock %}

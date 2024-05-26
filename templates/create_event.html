@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Create Event</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div id="roles-container">
+            <!-- Dynamic role fields will be added here -->
+        </div>
+        <button type="button" id="add-role" class="btn btn-secondary">Add Role</button>
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+    <div class="mt-4">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+<script>
+    let roleCount = 0;
+    document.getElementById('add-role').addEventListener('click', function() {
+        const container = document.getElementById('roles-container');
+        const roleField = document.createElement('div');
+        roleField.className = 'form-group';
+        roleField.innerHTML = `
+            <label for="role_name_${roleCount}">Role Name</label>
+            <input type="text" id="role_name_${roleCount}" name="role_name_${roleCount}" class="form-control">
+            <label for="allowed_number_${roleCount}">Allowed Number of Users</label>
+            <input type="number" id="allowed_number_${roleCount}" name="allowed_number_${roleCount}" class="form-control">
+            <label for="email_${roleCount}">Assign User by Email (optional)</label>
+            <input type="email" id="email_${roleCount}" name="email_${roleCount}" class="form-control">
+        `;
+        container.appendChild(roleField);
+        roleCount++;
+    });
+</script>
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endblock %}

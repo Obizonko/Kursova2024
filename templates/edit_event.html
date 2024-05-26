@@ -1,0 +1,33 @@
+<!-- edit_event.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Event: {{ event.event_name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h3>Roles</h3>
+        {{ role_formset.management_form }}
+        {% for form in role_formset %}
+            {{ form.as_p }}
+        {% endfor %}
+
+        <h3>Participants</h3>
+        {{ participant_formset.management_form }}
+        {% for form in participant_formset %}
+            {{ form.as_p }}
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+
+    <div class="mt-4">
+        <a href="{% url 'event_detail' event.id %}" class="btn btn-secondary">Back to Event</a>
+    </div>
+</div>
+{% endblock %}

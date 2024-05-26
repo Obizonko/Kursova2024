@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h2>Register</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <small class="form-text text-muted">
+                Your password must contain at least 8 characters, including a mix of letters, numbers, and symbols.
+            </small>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back</a>
+</div>
+{% endblock %}

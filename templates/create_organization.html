@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Organization{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h2>Create Organization</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Organization</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h2>Welcome, {{ user.name }}!</h2>
+<div class="mb-4">
+    <a href="{% url 'create_organization' %}" class="btn btn-primary">Create Organization</a>
+    {% if user.organizationmembers_set.exists %}
+        <a href="{% url 'create_event' %}" class="btn btn-primary">Create Event</a>
+    {% endif %}
+    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+</div>
+<h3>Upcoming Events</h3>
+<ul class="list-group">
+    {% for event in events %}
+        <li class="list-group-item">
+            <a href="{% url 'event_detail' event.id %}">{{ event.event_name }}</a>
+            <p>{{ event.description }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
